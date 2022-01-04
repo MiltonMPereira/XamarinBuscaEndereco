@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuscaCEP.Pages.CepsPage">
+    <NavigationPage.TitleView>
+        <FlexLayout AlignItems="Center">
+            <Label TextColor="White" Text="Consulta de endereços"/>
+        </FlexLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout Padding="5, 0"
+                 Spacing="5">
+
+            <Entry Text="{Binding CEPBusca}"
+               Placeholder="Informe o CEP" />
+
+            <Button Text="Buscar"
+                Command="{Binding BuscarCommand}" />
+
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
+
+            <ListView ItemsSource="{Binding Ceps}"  Footer="{Binding}"  SelectionMode="None" ItemTapped="ListView_ItemTapped"
+              CachingStrategy="RecycleElement" 
+              RowHeight="95">
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding cep}" Style="{StaticResource labelStyle}"/>
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding logradouro}" Style="{StaticResource labelStyle}"/>
+                                <Label Grid.Row="2" Grid.Column="0" Text="{Binding cidade}" Style="{StaticResource labelStyle}"/>
+
+                                <Ellipse Grid.Column="1" Fill="LightGray" Grid.RowSpan="3" Grid.Row="0"
+                                    WidthRequest="75" HorizontalOptions="Center" VerticalOptions="Center"
+                                    HeightRequest="75"/>
+                                <Label Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Text="{Binding uf}" FontSize="40" Margin="10" HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="CenterAndExpand" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.FooterTemplate>
+                    <DataTemplate>
+                        <ContentView BackgroundColor="#424242">
+                            <Label Margin="16"  HorizontalOptions="StartAndExpand" TextColor="White" Text="{Binding Ceps.Count, StringFormat='Quantidade de endereços: {0}'}" />
+                        </ContentView>
+                    </DataTemplate>
+                </ListView.FooterTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
